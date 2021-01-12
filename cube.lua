@@ -13,21 +13,22 @@ size = 63 -- 0 inclusive!
 points = {}
 
 for k = 0, 1 do
-	z = {}
-	z[0] = k * size
-	for j = 0, 1 do
-		y = {}
-		y[0] = j * size
-		for i = 0, 1 do
-			x = {}
-			x[0] = ((i + j) % 2) * size
-			point = {}
-			point[0] = x
-			point[1] = y
-			point[2] = z
-			points[i + (2 * j) + (4 * k)] = point
+  z = {}
+  z[0] = k * size
+  for j = 0, 1 do
+    y = {}
+    y[0] = j * size
+    for i = 0, 1 do
+      x = {}
+      x[0] = ((i + j) % 2) * size
+      point = {
+        [0] = x,
+        [1] = y,
+        [2] = z,
+      }
+      points[i + (2 * j) + (4 * k)] = point
       -- print(x[0], y[0], z[0])
-		end
+    end
   end
 end
 
@@ -50,15 +51,18 @@ function mm(m, p)
   return matrix 
 end
 
-project2d = {}
-project2d[0] = {}
-project2d[0][0] = 1
-project2d[0][1] = 0
-project2d[0][2] = 0
-project2d[1] = {}
-project2d[1][0] = 0
-project2d[1][1] = 1
-project2d[1][2] = 0
+project2d = {
+  [0] = {
+    [0] = 1,
+    [1] = 0,
+    [2] = 0,
+  },
+  [1] = {
+    [0] = 0,
+    [1] = 1,
+    [2] = 0,
+  },
+}
 
 function apply(matrix, points)
   result = {}
@@ -69,56 +73,65 @@ function apply(matrix, points)
 end
 
 function rotateX(points, a)
-  rotate = {}
-  rotate[0] = {}
-  rotate[0][0] = 1
-  rotate[0][1] = 0
-  rotate[0][2] = 0
-  rotate[1] = {}
-  rotate[1][0] = 0
-  rotate[1][1] = math.cos(a)
-  rotate[1][2] = -math.sin(a)
-  rotate[2] = {}
-  rotate[2][0] = 0
-  rotate[2][1] = math.sin(a)
-  rotate[2][2] = math.cos(a)
-
+  rotate = {
+    [0] = {
+      [0] = 1,
+      [1] = 0,
+      [2] = 0,
+    },
+    [1] = {
+      [0] = 0,
+      [1] = math.cos(a),
+      [2] = -math.sin(a),
+    },
+    [2] = {
+      [0] = 0,
+      [1] = math.sin(a),
+      [2] = math.cos(a),
+    },
+  }
   return apply(rotate, points)
 end
 
 function rotateY(points, a)
-  rotate = {}
-  rotate[0] = {}
-  rotate[0][0] = math.cos(a)
-  rotate[0][1] = 0
-  rotate[0][2] = math.sin(a)
-  rotate[1] = {}
-  rotate[1][0] = 0
-  rotate[1][1] = 1
-  rotate[1][2] = 0
-  rotate[2] = {}
-  rotate[2][0] = -math.sin(a)
-  rotate[2][1] = 0
-  rotate[2][2] = math.cos(a)
-
+  rotate = {
+    [0] = {
+      [0] = math.cos(a),
+      [1] = 0,
+      [2] = math.sin(a),
+    },
+    [1] = {
+      [0] = 0,
+      [1] = 1,
+      [2] = 0,
+    },
+    [2] = {
+      [0] = -math.sin(a),
+      [1] = 0,
+      [2] = math.cos(a),
+    },
+  }
   return apply(rotate, points)
 end
 
 function rotateZ(points, a)
-  rotate = {}
-  rotate[0] = {}
-  rotate[0][0] = math.cos(a)
-  rotate[0][1] = -math.sin(a)
-  rotate[0][2] = 0
-  rotate[1] = {}
-  rotate[1][0] = math.sin(a)
-  rotate[1][1] = math.cos(a)
-  rotate[1][2] = 0
-  rotate[2] = {}
-  rotate[2][0] = 0
-  rotate[2][1] = 0
-  rotate[2][2] = 1
-
+  rotate = {
+    [0] = {
+      [0] = math.cos(a),
+      [1] = -math.sin(a),
+      [2] = 0,
+    },
+    [1] = {
+      [0] = math.sin(a),
+      [1] = math.cos(a),
+      [2] = 0,
+    },
+    [2] = {
+      [0] = 0,
+      [1] = 0,
+      [2] = 1,
+    },
+  }
   return apply(rotate, points)
 end
 
